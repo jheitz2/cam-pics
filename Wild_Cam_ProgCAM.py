@@ -1,8 +1,12 @@
+# Alex N.
+# Wildlife Camera
+# 3 / 13 / 18
+# This is the program for my wildlife camera. It can turn on and off with the press of a button and can take pictures of animals automatically.
+
 # Importing my stuff
 from picamera import PiCamera
 import RPi.GPIO as GPIO
 from time import sleep
-from random import randint
 
 # Setting variables
 camera = PiCamera()
@@ -13,9 +17,6 @@ PIR = 12
 on = False
 images = 1
 IRs = [4, 5, 6, 7, 8, 9, 10, 11, 13]
-
-# Defining annotations
-annotations = ["Shhhh! Come here! Look!", "I seee you!", "Look! It's a wild Brogan! Wait, that isn't a wild Brogan...", "Is that... (gasp)", "Did yo see dat?"]
 
 # Setting up GPIO
 GPIO.setup(LED, GPIO.OUT)
@@ -34,17 +35,26 @@ while True:
             GPIO.output(IR, GPIO.HIGH)
         for i in range(100):
             sleep(0.05)
+            # Checking if the button is pressed while the program is waiting
             if GPIO.input(button):
                 on = False
                 GPIO.output(LED, GPIO.LOW)
                 sleep(1)
                 break
         if on == True and GPIO.input(PIR):
-            sleep(0.2)
-            camera.annotate_text = annotations[randint(0,4)]
-            camera.capture("/home/pi/cam-pics/Pictures/image%s.jpg" % images)
-            images += 1
-            
+            # Code for taking a picture (very simple)
+            try:
+                sleep(0.2)
+                camera.capture("/home/pi/cam-pics/Pictures/image%s.jpg" % images)
+                images += 1
+            except:
+                # If it (somehow) failed to take a picture, it gives this message and the light blinks:
+                print("Sorry, something went wrong. I feel guilty I didn't capture that wild animal for you.")
+                for ERROR_NOOO in range(5):
+                    GPIO.output(LED, GPIO.LOW)
+                    sleep(0.5)
+                    GPIO.output(LED, GPIO.HIGH)
+                    sleep(0.5)
     else:
         GPIO.output(LED, GPIO.LOW)
         for IR in IRs:
