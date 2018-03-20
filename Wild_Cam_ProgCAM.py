@@ -45,11 +45,11 @@ while True:
             # Code for taking a picture (very simple)
             try:
                 sleep(0.2)
-                camera.capture("/home/pi/cam-pics/Pictures/image%s.jpg" % images)
+                camera.capture("/home/pi/cam-pics/Pictures/image%03d.jpg" % images)
                 images += 1
             except:
                 # If it (somehow) failed to take a picture, it gives this message and the light blinks:
-                print("Sorry, something went wrong. I feel guilty I didn't capture that wild animal for you.")
+                print("Sorry, something went wrong.")
                 for ERROR_NOOO in range(5):
                     GPIO.output(LED, GPIO.LOW)
                     sleep(0.5)
