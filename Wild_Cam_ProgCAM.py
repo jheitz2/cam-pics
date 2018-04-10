@@ -16,23 +16,23 @@ button = 19
 PIR = 12
 on = False
 images = 1
-IRs = [4, 5, 6, 7, 8, 9, 10, 11, 13]
+#IRs = [4, 5, 6, 7, 8, 9, 10, 11, 13]
 
 # Setting up GPIO
 GPIO.setup(LED, GPIO.OUT)
 GPIO.setup(PIR, GPIO.IN)
 GPIO.setup(button, GPIO.IN)
 GPIO.output(LED, GPIO.LOW)
-for IR in IRs:
-    GPIO.setup(IR, GPIO.OUT)
-    GPIO.output(IR, GPIO.LOW)
+#for IR in IRs:
+    #GPIO.setup(IR, GPIO.OUT)
+    #GPIO.output(IR, GPIO.LOW)
 
 # Start a loop
 while True:
     if on == True:
         GPIO.output(LED, GPIO.HIGH)
-        for IR in IRs:
-            GPIO.output(IR, GPIO.HIGH)
+        #for IR in IRs:
+            #GPIO.output(IR, GPIO.HIGH)
         for i in range(100):
             sleep(0.05)
             # Checking if the button is pressed while the program is waiting
@@ -57,8 +57,8 @@ while True:
                     sleep(0.5)
     else:
         GPIO.output(LED, GPIO.LOW)
-        for IR in IRs:
-            GPIO.output(IR, GPIO.LOW)
+        #for IR in IRs:
+            #GPIO.output(IR, GPIO.LOW)
         if GPIO.input(button):
             on = True
             GPIO.output(LED, GPIO.HIGH)
